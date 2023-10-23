@@ -71,8 +71,7 @@ Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyon
 */
 
 function takimSkoru() {
-  const score = Math.floor(Math.random() * 16) + 10
-  return score;
+  return Math.floor(Math.random() * 16) + 10;
 }
 
 /* Görev 3: macSonucu() 
@@ -103,7 +102,6 @@ function macSonucu(myCallback, quarter) {
     "EvSahibi": evSahibi,
     "KonukTakim": konukTakim
   };
-
   return result;
 }
 
@@ -128,7 +126,7 @@ function periyotSkoru(myCallback) {
   const result = {
     "EvSahibi": evSahibi,
     "KonukTakim": konukTakim
-  }
+  };
   return result;
 }
 
@@ -164,11 +162,44 @@ MAÇ UZAR ise skorTabelasi(periyotSkoru,takimSkoru,4)
 ] */
 // NOTE: Bununla ilgili bir test yoktur. Eğer logladığınız sonuçlar yukarıdakine benziyor ise tmamlandı sayabilirsiniz.
 
-function skorTabelasi(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+function skorTabelasi(myPeriotCallback, myScoreCallback, quarter) {
+  let evSahibi = 0;
+  let konukTakim = 0;
+  const scoreBoard = [];
+
+  for (let p = 0; p < quarter; p++) {
+
+    const periotResult = myPeriotCallback(myScoreCallback);
+
+    evSahibi += periotResult["EvSahibi"];
+    konukTakim += periotResult["KonukTakim"];
+
+    scoreBoard.push(`${p+1}. Periot: Ev Sahibi ${periotResult["EvSahibi"]} - Konuk Takım ${periotResult["KonukTakim"]}`);
+    
+  }
+
+  while(evSahibi==konukTakim){
+    let uzatma = 1;
+
+    const periotResult = myPeriotCallback(myScoreCallback);
+
+    evSahibi += periotResult["EvSahibi"];
+    konukTakim += periotResult["KonukTakim"];
+
+    scoreBoard.push(`${uzatma}. Uzatma: Ev Sahibi ${periotResult["EvSahibi"]} - Konuk Takım ${periotResult["KonukTakim"]}`);
+
+    uzatma++;
+  }
+
+  scoreBoard.push(`Maç Sonucu: Ev Sahibi ${evSahibi} - Konuk Takım ${konukTakim}`);
+
+  for(let per of scoreBoard){
+    console.log(per);
+  }
+  
 }
 
-
+skorTabelasi(periyotSkoru ,takimSkoru, 1);
 
 
 /* Aşağıdaki satırları lütfen değiştirmeyiniz*/
