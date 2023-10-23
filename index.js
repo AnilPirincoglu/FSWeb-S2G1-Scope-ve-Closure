@@ -39,7 +39,7 @@ console.log('örnek görev:', ilkiniDon(['as', 'sa'], function (metin) { return 
   
   3. Hangi durumda skor1 tercih edilebilir? Hangi durumda skor2 daha mantıklıdır?
 
-  sadece 1 skor tutulması gerekiyorsa ve daha sonra da bu durum değişmeyecekse skor2 şeklinde tutulabilir. Fakat daha fazla skor tutulmak istenirse skor1 dry açısından daha temizdir.
+  sadece 1 skor tutulması gerekiyorsa ve daha sonra da bu durum değişmeyecekse skor2 şeklinde tutulabilir. Fakat daha fazla skor tutulmak istenirse skor1 dry açısından daha temizdir.Veri gizliliği açısından da skor1 in kullanılması gerekir.
 */
 
 // skor1 kodları
@@ -89,13 +89,13 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
 }
 */
 
-function macSonucu(myCallback, quarter) {
+function macSonucu(myTeamScore, quarter) {
   let evSahibi = 0;
   let konukTakim = 0;
 
-  for (let i = 0; i < quarter; i++) {
-    evSahibi += myCallback();
-    konukTakim += myCallback();
+  for (let P = 0; P < quarter; P++) {
+    evSahibi += myTeamScore();
+    konukTakim += myTeamScore();
   }
 
   const result = {
@@ -119,9 +119,9 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
   */
 
 
-function periyotSkoru(myCallback) {
-  let evSahibi = myCallback();
-  let konukTakim = myCallback();
+function periyotSkoru(myTeamScore) {
+  let evSahibi = myTeamScore();            
+  let konukTakim = myTeamScore();
 
   const result = {
     "EvSahibi": evSahibi,
@@ -162,26 +162,26 @@ MAÇ UZAR ise skorTabelasi(periyotSkoru,takimSkoru,4)
 ] */
 // NOTE: Bununla ilgili bir test yoktur. Eğer logladığınız sonuçlar yukarıdakine benziyor ise tmamlandı sayabilirsiniz.
 
-function skorTabelasi(myPeriotCallback, myScoreCallback, quarter) {
+function skorTabelasi(myPeriotScore, myTeamScore, quarter) {
   let evSahibi = 0;
   let konukTakim = 0;
   const scoreBoard = [];
 
-  for (let p = 0; p < quarter; p++) {
+  for (let p = 1; p <= quarter; p++) {
 
-    const periotResult = myPeriotCallback(myScoreCallback);
+    const periotResult = myPeriotScore(myTeamScore);
 
     evSahibi += periotResult["EvSahibi"];
     konukTakim += periotResult["KonukTakim"];
 
-    scoreBoard.push(`${p+1}. Periot: Ev Sahibi ${periotResult["EvSahibi"]} - Konuk Takım ${periotResult["KonukTakim"]}`);
-    
+    scoreBoard.push(`${p}. Periot: Ev Sahibi ${periotResult["EvSahibi"]} - Konuk Takım ${periotResult["KonukTakim"]}`);
+
   }
 
-  while(evSahibi==konukTakim){
+  while (evSahibi == konukTakim) {
     let uzatma = 1;
 
-    const periotResult = myPeriotCallback(myScoreCallback);
+    const periotResult = myPeriotScore(myTeamScore);
 
     evSahibi += periotResult["EvSahibi"];
     konukTakim += periotResult["KonukTakim"];
@@ -193,13 +193,10 @@ function skorTabelasi(myPeriotCallback, myScoreCallback, quarter) {
 
   scoreBoard.push(`Maç Sonucu: Ev Sahibi ${evSahibi} - Konuk Takım ${konukTakim}`);
 
-  for(let per of scoreBoard){
-    console.log(per);
-  }
-  
+  return scoreBoard;
 }
 
-skorTabelasi(periyotSkoru ,takimSkoru, 1);
+console.log(skorTabelasi(periyotSkoru, takimSkoru, 4));
 
 
 /* Aşağıdaki satırları lütfen değiştirmeyiniz*/
