@@ -18,7 +18,7 @@
 function ilkiniDon(stringArray, callback) {
   return callback(stringArray[0])
 }
-console.log('örnek görev:', ilkiniDon(['as','sa'],function(metin){return metin+metin}));
+console.log('örnek görev:', ilkiniDon(['as', 'sa'], function (metin) { return metin + metin }));
 
 // Başlangıç Challenge'ı Sonu
 
@@ -31,16 +31,22 @@ console.log('örnek görev:', ilkiniDon(['as','sa'],function(metin){return metin
   
   1. skor1 ve skor2 arasındaki fark nedir?
   
+  skor1 çalıştırıldığında skorArttırıcı fonksiyonundaki skor değişteni arttırılır, skor2 çalıştırıldığında global scopeta tanımlanan skor değişkeni arttırılır ve döner.
+
   2. Hangisi bir closure kullanmaktadır? Nasıl tarif edebilirsin? (yarınki derste öğreneceksin :) )
+
+  skor1 closure kullanmaktadır. Çünkü skorArttırıcı fonksiyonundan tanımlanmış her yeni değişken fonksiyonun içerisinde kendisi için yeni bir skor sayacı başlatır.
   
   3. Hangi durumda skor1 tercih edilebilir? Hangi durumda skor2 daha mantıklıdır?
+
+  sadece 1 skor tutulması gerekiyorsa ve daha sonra da bu durum değişmeyecekse skor2 şeklinde tutulabilir. Fakat daha fazla skor tutulmak istenirse skor1 dry açısından daha temizdir.
 */
 
 // skor1 kodları
 function skorArtirici() {
   let skor = 0;
   return function skorGuncelle() {
-   return skor++;
+    return skor++;
   }
 }
 
@@ -64,12 +70,10 @@ Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
 Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyonu olarak da kullanılacak
 */
 
-function takimSkoru(/*Kodunuzu buraya yazınız*/){
-    /*Kodunuzu buraya yazınız*/
+function takimSkoru() {
+  const score = Math.floor(Math.random() * 16) + 10
+  return score;
 }
-
-
-
 
 /* Görev 3: macSonucu() 
 Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
@@ -84,13 +88,26 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
   "EvSahibi": 92,
   "KonukTakim": 80
 }
-*/ 
+*/
 
-function macSonucu(/*Kodunuzu buraya yazınız*/){
-  /*Kodunuzu buraya yazınız*/
+function macSonucu(myCallback, quarter) {
+  let evSahibi = 0;
+  let konukTakim = 0;
+
+  for (let i = 0; i < quarter; i++) {
+    evSahibi += myCallback();
+    konukTakim += myCallback();
+  }
+
+  const result = {
+    "EvSahibi": evSahibi,
+    "KonukTakim": konukTakim
+  };
+
+  return result;
 }
 
-
+console.log(macSonucu(takimSkoru, 4));
 
 
 
@@ -154,7 +171,7 @@ function skorTabelasi(/*Kodunuzu buraya yazınız*/) {
 
 
 /* Aşağıdaki satırları lütfen değiştirmeyiniz*/
-function sa(){
+function sa() {
   console.log('Kodlar çalışıyor');
   return 'as';
 }
