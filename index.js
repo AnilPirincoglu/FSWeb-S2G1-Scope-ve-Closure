@@ -107,11 +107,6 @@ function macSonucu(myCallback, quarter) {
   return result;
 }
 
-console.log(macSonucu(takimSkoru, 4));
-
-
-
-
 /* Zorlayıcı Görev 4: periyotSkoru()
 Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
   1. Görev 2'de oluşturduğunuz 'takimSkoru'nu callback fonskiyonunu olarak ilk parametrede alın
@@ -126,9 +121,15 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
   */
 
 
-function periyotSkoru(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+function periyotSkoru(myCallback) {
+  let evSahibi = myCallback();
+  let konukTakim = myCallback();
 
+  const result = {
+    "EvSahibi": evSahibi,
+    "KonukTakim": konukTakim
+  }
+  return result;
 }
 
 
